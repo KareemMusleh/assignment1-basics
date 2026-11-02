@@ -1,0 +1,30 @@
+base_dir: base_dir
+
+model:
+  d_model: 512
+  vocab_size: 10000
+  num_layers: 4
+  n_heads: 16
+  d_ff: 1344
+  context_len: 256
+  theta: 10000.0
+optimizer:
+  lr: 0.0003
+  weight_decay: 0.01
+lr_scheduler:
+  max_lr: 0.0003
+  min_lr: 0.00003
+  warmup_iters: 100
+  cycle_iters: 1000
+
+
+train_data: artifacts/tokens/tinystories_train.npy
+valid_data: artifacts/tokens/tinystories_valid.npy
+num_steps: 1000
+batch_size: 32
+eval_interval: 100
+eval_batches: 20
+device: cuda
+dtype: bfloat16
+seed: 42
+output_dir: artifacts/checkpoints/tinystories

@@ -17,9 +17,10 @@ from cs336_basics.nn import (
     TransformerBlock, Transformer, CrossEntropyLoss
 )
 from cs336_basics.optim.adamw import AdamW
-from cs336_basics.lr_scheduler import LRCosineScheduler
+from cs336_basics.lr_scheduler import cosine_lr
 from cs336_basics.grad_clip import clip_grad
 from cs336_basics.get_batch import get_batch
+from cs336_basics.checkpoint import load_checkpoint, save_checkpoint
 
 
 def run_linear(
@@ -546,8 +547,7 @@ def run_get_lr_cosine_schedule(
     Returns:
         Learning rate at the given iteration under the specified schedule.
     """
-    lr_scheduler = LRCosineScheduler(max_learning_rate, min_learning_rate, warmup_iters, cosine_cycle_iters)
-    return lr_scheduler(it)
+    return cosine_lr(it, max_learning_rate, min_learning_rate, warmup_iters, cosine_cycle_iters)
 
 
 def run_save_checkpoint(
@@ -566,8 +566,7 @@ def run_save_checkpoint(
             we've completed.
         out (str | os.PathLike | BinaryIO | IO[bytes]): Path or file-like object to serialize the model, optimizer, and iteration to.
     """
-    raise NotImplementedError
-
+    save_checkpoint(model, optimizer, iteration, out)
 
 def run_load_checkpoint(
     src: str | os.PathLike | BinaryIO | IO[bytes],
@@ -587,7 +586,7 @@ def run_load_checkpoint(
     Returns:
         int: the previously-serialized number of iterations.
     """
-    raise NotImplementedError
+    return load_checkpoint(src, model, optimizer)
 
 
 def get_tokenizer(

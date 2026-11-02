@@ -19,6 +19,10 @@ dependencies = [
     "wandb>=0.25",
     "ty>=0.0.26",
     "ruff>=0.15.8",
+    "attrs>=26.1.0",
+    "cattrs>=26.2.1",
+    "pyyaml>=6.0.3",
+    "tyro>=1.0.16",
 ]
 
 [build-system]

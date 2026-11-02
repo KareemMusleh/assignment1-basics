@@ -10,7 +10,7 @@ def get_batch(
     input_ids = dataset[indices]
     targets = dataset[indices + 1]
 
-    input_ids = torch.from_numpy(input_ids).to(device).reshape(batch_size, context_length)
-    targets = torch.from_numpy(targets).to(device).reshape(batch_size, context_length)
+    input_ids = torch.from_numpy(input_ids).to(device=device, dtype=torch.long).reshape(batch_size, context_length)
+    targets = torch.from_numpy(targets).to(device=device, dtype=torch.long).reshape(batch_size, context_length)
     assert len(targets) == len(input_ids)
     return input_ids, targets

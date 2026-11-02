@@ -1,9 +1,11 @@
 import torch
+from collections.abc import Iterator
 
-def clip_grad(params: list[torch.nn.Parameter], max_l2_norm: float):
+def clip_grad(params: Iterator[torch.nn.Parameter], max_l2_norm: float):
+    if not isinstance(params, (list, tuple)):
+        params = [param for param in params]
+
     eps = 1e-6
-    if len(params) == 0:
-        return
     l2_norm = 0.0
     for param in params:
         if param.grad is None:
